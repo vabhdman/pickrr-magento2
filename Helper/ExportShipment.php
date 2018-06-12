@@ -97,7 +97,7 @@ extends \Magento\Framework\App\Helper\AbstractHelper
         $order->save();
     }
 
-    public function createShipment($auth_token, $item_name, $from_name, $from_phone_number, $from_pincode, $from_address, $to_name, $to_phone_number, $to_pincode, $to_address, $cod=0.0, $pickup_time = 'NULL', $order_id = 'NULL')
+    public function createShipment($auth_token, $item_name, $from_name, $from_phone_number, $from_pincode, $from_address, $to_name, $to_phone_number, $to_pincode, $to_address, $invoice_amount, $cod=0.0, $pickup_time = 'NULL', $order_id = 'NULL')
     {
         try{
 
@@ -112,7 +112,8 @@ extends \Magento\Framework\App\Helper\AbstractHelper
                       'to_phone_number' => $to_phone_number,
                       'to_pincode' => $to_pincode,
                       'to_address' => $to_address,
-                      'client_order_id' => $order_id
+                      'client_order_id' => $order_id,
+                      'invoice_value' => $invoice_value
                     );
 
             if($cod>0.0) $params['cod_amount'] = $cod;
@@ -151,7 +152,7 @@ extends \Magento\Framework\App\Helper\AbstractHelper
         }
     }
 
-    public function createOrderShipment($auth_token, $order, $from_name, $from_phone_number, $from_pincode, $from_address, $cod=0.0, $pickup_time = 'NULL')
+    public function createOrderShipment($auth_token, $order, $from_name, $from_phone_number, $from_pincode, $from_address, $invoice_amount, $cod=0.0, $pickup_time = 'NULL')
     {
         try{
             $itemCount = $order->getTotalItemCount();
@@ -167,7 +168,7 @@ extends \Magento\Framework\App\Helper\AbstractHelper
             $to_address = implode(', ', $shipping_address->getStreet()) . ", " . $shipping_address->getCity() . ", " . $shipping_address->getRegion();
             $order_id = $order->getIncrementId();
 
-            $tracking_no = $this->createShipment($auth_token, $item_name, $from_name, $from_phone_number, $from_pincode, $from_address, $to_name, $to_phone_number, $to_pincode, $to_address, $order_id, $pickup_time, $cod);
+            $tracking_no = $this->createShipment($auth_token, $item_name, $from_name, $from_phone_number, $from_pincode, $from_address, $to_name, $to_phone_number, $to_pincode, $to_address, $invoice_amount, $cod, $pickup_time, $order_id);
 
             $this->completeShipment($order, $tracking_no);
         }

@@ -1,19 +1,19 @@
 <?php
 namespace Pickrr\Magento2\Observer;
- 
+
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\App\Bootstrap;
 use \Magento\Framework\App\Config\ScopeConfigInterface;
 use \Pickrr\Magento2\Helper\ExportShipment;
 use Magento\Sales\Model\Order;
- 
+
 class orderCommitAfter implements ObserverInterface
 {
     /**
      * @var ObjectManagerInterface
      */
     protected $_objectManager;
- 
+
     /**
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      */
@@ -26,7 +26,7 @@ class orderCommitAfter implements ObserverInterface
         $this->_objectManager = $objectManager;
         $this->scopeConfig = $scopeConfig;
     }
- 
+
     /**
      * customer register event handler
      *
@@ -45,6 +45,7 @@ class orderCommitAfter implements ObserverInterface
             $cod_amount = $order->getGrandTotal();
         else
             $cod_amount = 0.0;
+        $invoice_amount = $order->getGrandTotal();
 
         if ($order->getState() != Order::STATE_NEW && $order->getState() != Order::STATE_PENDING_PAYMENT )
            return NULL;
@@ -57,6 +58,6 @@ class orderCommitAfter implements ObserverInterface
         $from_pincode = $this->scopeConfig->getValue('pickrr_magento2/shipment_details/from_pincode', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
         $from_address = $this->scopeConfig->getValue('pickrr_magento2/shipment_details/from_address', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 
-        $this->helper->createOrderShipment($auth_token, $order, $from_name, $from_phone_number, $from_pincode, $from_address, $pickup_time, $cod_amount);
+        $this->helper->createOrderShipment($auth_token, $order, $from_name, $from_phone_number, $from_pincode, $from_address, $invoice_amount, $cod_amount, $pickup_time);
     }
 }
