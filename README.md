@@ -4,13 +4,9 @@ Pickrr Magento 2 module for automatic/manual creation of shipments thorugh Pickr
 
 ###Installation Instructions:
 
-1. Extract the zip file in the the `<root_of_Magento2>/app/code` <br>
- OR <br>
- Goto Magento's root folder and install it using composer from terminal:
- 
- ```shell
- composer require pickrr/magento2:dev-master
- ```
+1. Extract the zip file contents into the `<root_of_Magento2>/app/code/Pickrr/Magento` (you will need to create `Pickrr/Magento` folders) <br>
+The contents should look like `<root_of_Magento2>/app/code/Pickrr/Magento/registration.php`
+
 2. Goto root folder of magento in terminal, and run:
  ```shell
  bin/magento module:enable Pickrr_Magento2
@@ -41,7 +37,7 @@ Passing $pickup_time and $cod is optional.
 
 **Prototype of the function:**
 ```php
-createShipment($auth_token, $item_name, $from_name, $from_phone_number, $from_pincode, $from_address, $to_name, $to_phone_number, $to_pincode, $to_address, $cod=0.0, $pickup_time='NULL', $order_id = 'NULL');
+createShipment($auth_token, $item_name, $from_name, $from_phone_number, $from_pincode, $from_address, $to_name, $to_phone_number, $to_pincode, $to_address, $invoice_amount, $cod=0.0, $pickup_time = 'NULL', $order_id = 'NULL')
 ```
 
 It returns the tracking_id from Pickrr.
@@ -52,7 +48,7 @@ It returns the tracking_id from Pickrr.
 
 $auth_key =  'Your Auth Key';
 
-$helper->createOrderShipment($auth_key, "Item's Name", "Merchant/Sender's Name", "Merchant/Sender's Phone", 'Pickup Address Pin', 'Pickup Address', 300.0, '2016-06-17 17:00');
+$helper->createOrderShipment($auth_key, "Item's Name", "Merchant/Sender's Name", "Merchant/Sender's Phone", 'Pickup Address Pin', 'Pickup Address', 300.0, 300.0, '2016-06-17 17:00');
 ```
 
 ---
@@ -63,7 +59,7 @@ This will also create shipment and associate it with the passed order. The clien
 
 **Prototype of the function:**
 ```php
-createOrderShipment($auth_token, $order, $from_name, $from_phone_number, $from_pincode, $from_address, $cod=0.0, $pickup_time='NULL');
+createOrderShipment($auth_token, $order, $from_name, $from_phone_number, $from_pincode, $from_address, $invoice_amount, $cod=0.0, $pickup_time = 'NULL');
 
 ```
 
@@ -74,5 +70,5 @@ createOrderShipment($auth_token, $order, $from_name, $from_phone_number, $from_p
 $auth_key =  'Your Auth Key';
 $order = $objectManager->get('Magento\Sales\Model\Order')->loadByIncrementId('100000094');
 
-$helper->createOrderShipment($auth_key, $order, "Merchant/Sender's Name", "Merchant/Sender's Phone", 'Pickup Address Pin', 'Pickup Address', 300.0, '2016-06-17 17:00');
+$helper->createOrderShipment($auth_key, $order, "Merchant/Sender's Name", "Merchant/Sender's Phone", 'Pickup Address Pin', 'Pickup Address' , 300.0, 300.0, '2016-06-17 17:00');
 ```

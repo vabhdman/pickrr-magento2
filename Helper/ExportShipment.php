@@ -113,7 +113,7 @@ extends \Magento\Framework\App\Helper\AbstractHelper
                       'to_pincode' => $to_pincode,
                       'to_address' => $to_address,
                       'client_order_id' => $order_id,
-                      'invoice_value' => $invoice_value
+                      'invoice_value' => $invoice_amount
                     );
 
             if($cod>0.0) $params['cod_amount'] = $cod;
