@@ -4,8 +4,8 @@ Pickrr Magento 2 module for automatic/manual creation of shipments thorugh Pickr
 
 ###Installation Instructions:
 
-1. Extract the zip file contents into the `<root_of_Magento2>/app/code/Pickrr/Magento` (you will need to create `Pickrr/Magento` folders) <br>
-The contents should look like `<root_of_Magento2>/app/code/Pickrr/Magento/registration.php`
+1. Extract the zip file contents into the `<root_of_Magento2>/app/code/Pickrr/Magento2` (you will need to create `Pickrr/Magento2` folders) <br>
+The contents should look like `<root_of_Magento2>/app/code/Pickrr/Magento2/registration.php`
 
 2. Goto root folder of magento in terminal, and run:
  ```shell
